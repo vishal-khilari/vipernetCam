@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import os
+import webbrowser   # ⬅️ add this
 from encrypt_alert import decrypt_alert_bytes
 
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'forensics.db')
@@ -10,6 +11,10 @@ conn = sqlite3.connect(DB_PATH, check_same_thread=False)
 
 st.set_page_config(layout='wide', page_title='ViperNet Dashboard')
 st.title("ViperNet Dashboard — Forensics & Alerts")
+
+# ⬇️ Add the button right after the title
+if st.button("Demo Cam"):
+    webbrowser.open_new_tab("http://127.0.0.1:5500/vipernetCam/index.html")
 
 df = pd.read_sql_query("SELECT * FROM intrusion_logs ORDER BY id DESC LIMIT 200", conn)
 st.subheader("Recent logs")
